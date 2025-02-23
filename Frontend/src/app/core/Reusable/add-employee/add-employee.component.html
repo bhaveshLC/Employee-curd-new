@@ -1,0 +1,119 @@
+<!-- Modal -->
+<div
+  id="add-employee-modal"
+  class="fixed inset-0 z-50 flex items-center justify-center backdrop hidden"
+>
+  <div
+    class="bg-white dark:bg-slate-700 dark:text-white rounded-lg shadow-lg p-6 w-full md:w-1/3"
+  >
+    <h2 class="text-xl font-bold mb-4">Add Employee</h2>
+    <form [formGroup]="employeeForm">
+      <div class="mb-2">
+        <label class="block font-semibold text-gray-700 dark:text-white"
+          >Name</label
+        >
+        <input
+          type="text"
+          required
+          formControlName="name"
+          placeholder="Name"
+          class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
+        />
+        <div
+          *ngIf="employeeForm.controls['name'].touched && employeeForm.controls['name'].errors?.['required']"
+          class="text-red-500 text-sm"
+        >
+          Name is required.
+        </div>
+      </div>
+      <div class="mb-2">
+        <label class="block font-semibold text-gray-700 dark:text-white"
+          >Email</label
+        >
+        <input
+          type="email"
+          formControlName="email"
+          name="email"
+          placeholder="Email"
+          class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
+        />
+        <div
+          *ngIf="employeeForm.controls['email'].touched && employeeForm.controls['email'].errors?.['required']"
+          class="text-red-500 text-sm"
+        >
+          Email is required.
+        </div>
+        <div
+          *ngIf="employeeForm.controls['email'].touched && employeeForm.controls['email'].errors?.['email']"
+          class="text-red-500 text-sm"
+        >
+          Please enter a valid email address.
+        </div>
+      </div>
+      <div class="mb-2">
+        <label class="block font-semibold text-gray-700 dark:text-white"
+          >Department</label
+        >
+        <select
+          name="department"
+          formControlName="department"
+          id="department"
+          class="mt-1 block w-full px-3 py-2 border dark:bg-slate-600 border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
+        >
+          <option value="" selected>Select Department</option>
+          <option *ngFor="let department of departments" [value]="department">
+            {{ department }}
+          </option>
+        </select>
+        <div
+          *ngIf="employeeForm.controls['department'].touched && employeeForm.controls['department'].errors?.['required']"
+          class="text-red-500 text-sm"
+        >
+          Department is required.
+        </div>
+      </div>
+      <div class="mb-2">
+        <label class="block font-semibold text-gray-700 dark:text-white"
+          >Salary</label
+        >
+        <input
+          type="number"
+          formControlName="salary"
+          name="salary"
+          placeholder="Salary"
+          min="0"
+          class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
+        />
+        <div
+          *ngIf="employeeForm.controls['salary'].touched && employeeForm.controls['salary'].errors?.['required']"
+          class="text-red-500 text-sm"
+        >
+          Salary is required.
+        </div>
+        <div
+          *ngIf="employeeForm.controls['salary'].touched && employeeForm.controls['salary'].errors?.['min']"
+          class="text-red-500 text-sm"
+        >
+          Salary must be a positive number.
+        </div>
+      </div>
+      <div class="flex justify-end">
+        <button
+          type="button"
+          class="mr-2 px-4 py-2 bg-gray-300 text-gray-700 rounded"
+          (click)="closeModal()"
+        >
+          Cancel
+        </button>
+        <button
+          type="submit"
+          class="px-4 py-2 bg-blue-600 text-white rounded cursor-pointer disabled:bg-blue-300 disabled:cursor-not-allowed"
+          [disabled]="employeeForm.invalid"
+          (click)="onSubmit()"
+        >
+          Add Employee
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

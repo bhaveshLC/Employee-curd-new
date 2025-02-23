@@ -1,0 +1,133 @@
+<div
+  class="flex justify-center items-center h-screen dark:bg-slate-800 dark:text-white"
+>
+  <form
+    [formGroup]="signupForm"
+    class="w-full max-w-sm mx-auto p-6 bg-white rounded-md shadow-md dark:shadow-lg bg-white dark:bg-gray-700"
+  >
+    <h2 class="text-center text-2xl font-bold text-blue-500">SignUp</h2>
+    <div class="mb-4">
+      <label
+        for="name"
+        class="block text-gray-700 text-sm font-bold mb-2 dark:text-white"
+        >Full Name</label
+      >
+      <input
+        type="text"
+        formControlName="name"
+        name="name"
+        placeholder="Enter your Name"
+        class="w-full px-3 py-2 text-gray-700 border border-gray-300 rounded-md dark:text-white focus:outline-none focus:ring-primary-500 focus:border-primary-500"
+      />
+      <div
+        *ngIf="signupForm.controls['name'].touched && signupForm.controls['name'].errors?.['required']"
+        class="text-red-500 text-sm"
+      >
+        Name is required.
+      </div>
+    </div>
+    <div class="mb-4">
+      <label
+        for="email"
+        class="block text-gray-700 text-sm font-bold mb-2 dark:text-white"
+        >Email</label
+      >
+      <input
+        type="text"
+        formControlName="email"
+        name="email"
+        placeholder="Enter your email address"
+        class="w-full px-3 py-2 text-gray-700 border border-gray-300 rounded-md dark:text-white focus:outline-none focus:ring-primary-500 focus:border-primary-500"
+      />
+      <div
+        *ngIf="signupForm.controls['email'].touched && signupForm.controls['email'].errors?.['required']"
+        class="text-red-500 text-sm"
+      >
+        Email is required.
+      </div>
+      <div
+        *ngIf="signupForm.controls['email'].touched && signupForm.controls['email'].errors?.['email']"
+        class="text-red-500 text-sm"
+      >
+        Please enter a valid email address.
+      </div>
+    </div>
+    <div class="mb-4">
+      <label
+        for="password"
+        class="block text-gray-700 text-sm font-bold mb-2 dark:text-white"
+        >Password</label
+      >
+      <input
+        type="password"
+        formControlName="password"
+        name="password"
+        placeholder="Password"
+        class="w-full px-3 py-2 text-gray-700 border border-gray-300 rounded-md dark:text-white focus:outline-none focus:ring-primary-500 focus:border-primary-500"
+      />
+      <div
+        *ngIf="signupForm.controls['password'].touched && signupForm.controls['password'].errors?.['required']"
+        class="text-red-500 text-sm"
+      >
+        Password is required.
+      </div>
+      <div
+        *ngIf="signupForm.controls['password'].touched && signupForm.controls['password'].errors?.['minlength']"
+        class="text-red-500 text-sm"
+      >
+        Password must be at least 6 characters long.
+      </div>
+    </div>
+    <div class="mb-4">
+      <label
+        for="confirmPassword"
+        class="block text-gray-700 text-sm font-bold mb-2 dark:text-white"
+        >Confirm Password</label
+      >
+      <input
+        type="password"
+        formControlName="confirmPassword"
+        name="confirmPassword"
+        placeholder="Confirm Password"
+        class="w-full px-3 py-2 text-gray-700 border border-gray-300 rounded-md dark:text-white focus:outline-none focus:ring-primary-500 focus:border-primary-500"
+      />
+      <div
+        *ngIf="
+            signupForm.controls['confirmPassword'].touched &&
+            signupForm.controls['confirmPassword'].errors?.['required']
+          "
+        class="text-red-500 text-sm"
+      >
+        Confirm Password is required.
+      </div>
+      <div
+        class="text-red-500 text-sm"
+        *ngIf="signupForm.controls['confirmPassword'].touched && signupForm.errors?.['PasswordNoMatch']"
+      >
+        Password does'nt match.
+      </div>
+    </div>
+    <button
+      type="submit"
+      (click)="onSubmit()"
+      [disabled]="signupForm.invalid"
+      class="w-full px-4 py-2 bg-blue-500 text-white cursor-pointer rounded-md hover:bg-blue-600 focus:outline-none focus:ring-blue-500 focus:ring-offset-2 disabled:bg-blue-300 disabled:cursor-not-allowed"
+    >
+      <i class="fa fa-spinner fa-spin" *ngIf="isLoading"> </i>
+
+      Sign Up
+    </button>
+    <div class="text-center mt-4">
+      <span>
+        Already have an account?
+        <a
+          [routerLink]="['/login']"
+          routerLinkActive="router-link-active"
+          class="text-blue-500 font-semibold"
+        >
+          Login</a
+        >
+      </span>
+    </div>
+  </form>
+</div>

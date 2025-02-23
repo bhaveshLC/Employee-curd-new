@@ -1,0 +1,57 @@
+<div class="grid place-content-center mt-4 pb-2">
+  @if(totalPages.length > 0){
+  <nav aria-label="Page navigation example">
+    <ul class="inline-flex -space-x-px text-base h-10">
+      <li>
+        <button
+          (click)="onPageChange(currentPage - 1)"
+          class="flex items-center justify-center px-2 h-10 ms-0 text-gray-900 dark:bg-slate-600 dark:text-white disabled:text-gray-400 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 cursor-pointer disabled:cursor-not-allowed"
+          [disabled]="currentPage == 1"
+        >
+          Previous
+        </button>
+      </li>
+      <li class="flex">
+        <button
+          (click)="onPageChange(currentPage - 2)"
+          class="flex items-center justify-center px-3 h-10 text-gray-900 dark:bg-slate-600 dark:text-white disabled:text-blue-600 disabled:underline bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700"
+          *ngIf="currentPage > 2"
+        >
+          ...
+        </button>
+        @for (item of totalPages; track $index) {
+        <button
+          *ngIf="
+            item - 1 == currentPage ||
+            item + 1 == currentPage ||
+            item == currentPage
+          "
+          (click)="onPageChange(item)"
+          [ngClass]="{ 'font-semibold': item == currentPage }"
+          class="flex items-center justify-center px-3 h-10 text-gray-900 dark:bg-slate-600 dark:text-white disabled:text-blue-500 disabled:underline bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700"
+          [disabled]="item == currentPage"
+        >
+          {{ item }}
+        </button>
+        }
+        <button
+          (click)="onPageChange(currentPage + 2)"
+          class="flex items-center justify-center px-3 h-10 text-gray-900 dark:bg-slate-600 dark:text-white disabled:text-blue-600 disabled:underline bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700"
+          *ngIf="currentPage < totalPages.length - 1"
+        >
+          ...
+        </button>
+      </li>
+      <li>
+        <button
+          (click)="onPageChange(currentPage + 1)"
+          class="flex items-center justify-center px-2 h-10 text-gray-900 dark:bg-slate-600 dark:text-white disabled:text-gray-400 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 cursor-pointer disabled:cursor-not-allowed"
+          [disabled]="currentPage == totalPages.length"
+        >
+          Next
+        </button>
+      </li>
+    </ul>
+  </nav>
+  }
+</div>
