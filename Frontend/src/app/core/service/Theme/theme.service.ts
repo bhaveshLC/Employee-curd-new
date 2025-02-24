@@ -25,7 +25,6 @@ export class ThemeService {
 
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
     mediaQuery.addEventListener('change', (event) => {
-      console.log(event.matches);
       if (!localStorage.getItem('theme')) {
         const darkThemeMq = event.matches;
         if (darkThemeMq) {

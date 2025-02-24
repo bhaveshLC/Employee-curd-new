@@ -50,17 +50,11 @@ async function getLoggedInUser(req, res) {
   const user = await authService.getLoggedInUser(userId);
   res.status(200).json(user);
 }
-async function changePassword(req, res) {
-  const userId = req.user._id;
-  const { password, newPassword } = req.body;
-  await authService.changePassword(userId, password, newPassword);
-  res.status(200).json({});
-}
+
 module.exports = {
   registerUser,
   loginUser,
   refreshAccessToken,
   getLoggedInUser,
   logoutUser,
-  changePassword,
 };

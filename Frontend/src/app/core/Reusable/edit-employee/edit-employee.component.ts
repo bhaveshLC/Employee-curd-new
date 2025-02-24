@@ -7,12 +7,7 @@ import {
   Output,
 } from '@angular/core';
 import { iEmployee } from '../../models/interface';
-import {
-  FormControl,
-  FormGroup,
-  FormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ToastService } from '../../service/toast/toast.service';
 import { EmployeeService } from '../../service/Employee/employee.service';
@@ -56,7 +51,7 @@ export class EditEmployeeComponent implements OnChanges {
       email: this.employee?.email!,
       department: this.employee?.department!,
       salary: this.employee?.salary!,
-      addedBy: this.employee?.addedBy
+      addedBy: this.employee?.addedBy,
     };
   }
   onUpdate() {

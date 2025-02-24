@@ -11,10 +11,8 @@ import Swal from 'sweetalert2';
 import { PaginationComponent } from '../components/pagination/pagination.component';
 import { AuthService } from '../../core/service/Auth/auth.service';
 import { EmployeeService } from '../../core/service/Employee/employee.service';
-import { debounceTime, Subject, takeUntil } from 'rxjs';
-import { ChangePasswordComponent } from '../../core/Reusable/change-password/change-password.component';
-import { NavbarComponent } from '../components/navbar/navbar.component';
-import { FilterComponent } from "../components/filter/filter.component";
+import { FilterComponent } from '../components/filter/filter.component';
+import { ConfirmationService } from '../../core/service/Confirmation/confirmation.service';
 
 @Component({
   selector: 'app-home',
@@ -26,16 +24,16 @@ import { FilterComponent } from "../components/filter/filter.component";
     EditEmployeeComponent,
     PaginationComponent,
     LoaderComponent,
-    ChangePasswordComponent,
     CurrencyPipe,
-    FilterComponent
-],
+    FilterComponent,
+  ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
 export class HomeComponent {
   employeeService = inject(EmployeeService);
   authService = inject(AuthService);
+  confirmationService = inject(ConfirmationService);
   themeService = inject(ThemeService);
   router = inject(Router);
   employees: iEmployee[] = [];
@@ -54,7 +52,7 @@ export class HomeComponent {
   ngOnInit(): void {
     this.getEmployees();
   }
- 
+
   getEmployees() {
     this.isLoading = true;
     this.employeeService.getEmployees(this.queryObj).subscribe({
@@ -72,7 +70,7 @@ export class HomeComponent {
     });
   }
   updateFilters(updatedQueryObj: any): void {
-    this.queryObj = { ...updatedQueryObj }; 
+    this.queryObj = { ...updatedQueryObj };
     this.getEmployees();
   }
   onPageChange(page: any) {
@@ -92,48 +90,40 @@ export class HomeComponent {
       modal.classList.remove('hidden');
     }
   }
-  deleteEmployee(id: string) {
-    Swal.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to recover this employee!",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!',
-      background: this.themeService.backgroundColor(),
-      color: this.themeService.textColor(),
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.employeeService.deleteEmployee(id).subscribe({
-          next: () => {
-            if (
-              this.totalEmployees % this.queryObj.limit == 1 &&
-              this.queryObj.page != 1
-            ) {
-              this.queryObj.page--;
-            }
-            this.getEmployees();
-            Swal.fire({
-              title: 'Deleted!',
-              text: 'Employee has been deleted.',
-              icon: 'success',
-              background: this.themeService.backgroundColor(),
-              color: this.themeService.textColor(),
-            });
-          },
-          error: (error) => {
-            console.error(error);
-            Swal.fire({
-              title: 'Error!',
-              text: error.error.message,
-              icon: 'error',
-              background: this.themeService.backgroundColor(),
-              color: this.themeService.textColor(),
-            });
-          },
-        });
-      }
-    });
+  async deleteEmployee(id: string) {
+    const isConfirmed = await this.confirmationService.isConfirm(
+      'Are you sure?',
+      'You will not able to recover this employee'
+    );
+    if (isConfirmed) {
+      this.employeeService.deleteEmployee(id).subscribe({
+        next: () => {
+          if (
+            this.totalEmployees % this.queryObj.limit == 1 &&
+            this.queryObj.page != 1
+          ) {
+            this.queryObj.page--;
+          }
+          this.getEmployees();
+          Swal.fire({
+            title: 'Deleted!',
+            text: 'Employee has been deleted.',
+            icon: 'success',
+            background: this.themeService.backgroundColor(),
+            color: this.themeService.textColor(),
+          });
+        },
+        error: (error) => {
+          console.error(error);
+          Swal.fire({
+            title: 'Error!',
+            text: error.error.message,
+            icon: 'error',
+            background: this.themeService.backgroundColor(),
+            color: this.themeService.textColor(),
+          });
+        },
+      });
+    }
   }
 }

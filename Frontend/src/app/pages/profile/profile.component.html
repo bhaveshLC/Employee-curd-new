@@ -1,0 +1,57 @@
+<div
+  class="flex flex-col justify-center items-center min-h-screen bg-gray-100 dark:bg-slate-700"
+>
+  @if(!authService.user()){
+  <app-loader />
+  }@else{
+  <div class="dark:bg-slate-800 shadow-md rounded-lg py-6 px-10">
+    <div class="mt-4 text-center relative">
+      <img
+        [src]="
+          authService.user()?.profilePicture ||
+          'https://ui-avatars.com/api/name=' + authService.user()?.name
+        "
+        alt=""
+        class="w-full h-full backdrop"
+      />
+      <div
+        class="absolute top-0 left-0 w-full h-full flex justify-end p-2 items-start transition-opacity duration-300"
+      >
+        <button
+          class="bg-blue-400 px-1.5 rounded font-semibold cursor-pointer opacity-50 hover:opacity-100"
+          (click)="openUploadProfile()"
+        >
+          <!-- <i class="fa-solid fa-retweet ml-1 text-lg"></i> -->
+          <i class="fa-solid fa-pen ml-1"></i>
+        </button>
+      </div>
+    </div>
+    <div class="mt-4 flex flex-wrap gap-4 items-center">
+      <h2 class="text-lg font-semibold text-gray-700 dark:text-gray-300">
+        Name:
+      </h2>
+      <p class="text-gray-600 dark:text-gray-400">
+        {{ authService.user()?.name }}
+      </p>
+    </div>
+    <div class="mt-4 flex flex-wrap gap-4 items-center">
+      <h2 class="text-lg font-semibold text-gray-700 dark:text-gray-300">
+        Email:
+      </h2>
+      <p class="text-gray-600 dark:text-gray-400">
+        {{ authService.user()?.email }}
+      </p>
+    </div>
+    <div class="mt-4 text-center text-white">
+      <button
+        class="bg-yellow-500 p-2 rounded font-semibold cursor-pointer"
+        (click)="openEditUserModal()"
+      >
+        Update Profile <i class="fa-solid fa-retweet ml-1 text-lg"></i>
+      </button>
+    </div>
+  </div>
+  }
+</div>
+<app-edit-user [user]="authService.user()" />
+<app-upload-profile />

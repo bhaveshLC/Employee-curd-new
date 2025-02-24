@@ -14,10 +14,8 @@ export class AppComponent implements OnInit {
   themeService = inject(ThemeService);
   ngOnInit(): void {
     if (this.themeService.theme() === 'dark') {
-      console.log('dark mode');
       document.documentElement.classList.add('dark');
     } else {
-      console.log('light');
       document.documentElement.classList.remove('dark');
     }
   }

@@ -7,9 +7,10 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { passwordMatchValidator } from '../../shared/passwordMatchValidator/passwordMatchValidator';
+import { passwordMatchValidator } from '../../shared/passwordValidation/passwordMatchValidator';
 import { CommonModule } from '@angular/common';
 import { ToastService } from '../../service/toast/toast.service';
+import { UserService } from '../../service/User/user.service';
 
 @Component({
   selector: 'app-change-password',
@@ -19,7 +20,7 @@ import { ToastService } from '../../service/toast/toast.service';
   styleUrl: './change-password.component.css',
 })
 export class ChangePasswordComponent {
-  authService = inject(AuthService);
+  userService = inject(UserService);
   toastService = inject(ToastService);
   changePasswordForm = new FormGroup(
     {
@@ -42,7 +43,7 @@ export class ChangePasswordComponent {
   onUpdatePassword() {
     const password = this.changePasswordForm.get('oldPassword')?.value!;
     const newPassword = this.changePasswordForm.get('password')?.value!;
-    this.authService.changePassword(password, newPassword).subscribe({
+    this.userService.changePassword(password, newPassword).subscribe({
       next: () => {
         this.closeModal();
         this.toastService.getToast('success', 'Password Updated Successfully');

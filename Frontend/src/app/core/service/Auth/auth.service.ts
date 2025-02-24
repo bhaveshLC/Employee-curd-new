@@ -27,10 +27,4 @@ export class AuthService {
   refreshAccessToken() {
     return this.httpService.post('auth/refresh-token', {});
   }
-  changePassword(password: string, newPassword: string) {
-    return this.httpService.put('auth/change-password', {
-      password,
-      newPassword,
-    });
-  }
 }

@@ -1,0 +1,56 @@
+<div
+  id="edit-user-modal"
+  class="fixed inset-0 z-50 flex items-center justify-center backdrop hidden"
+>
+  @if(user){
+  <div
+    class="bg-white dark:bg-slate-700 rounded-lg shadow-lg p-6 w-full md:w-1/3"
+  >
+    <h2 class="text-xl font-bold mb-4">Edit User Details</h2>
+    <form>
+      <div class="mb-4">
+        <label class="block font-semibold text-gray-700 dark:text-white"
+          >Name</label
+        >
+        <input
+          type="text"
+          name="name"
+          placeholder="Name"
+          [(ngModel)]="user.name"
+          class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
+          required
+        />
+      </div>
+      <div class="mb-4">
+        <label class="block font-semibold text-gray-700 dark:text-white"
+          >Email</label
+        >
+        <input
+          type="email"
+          name="email"
+          [(ngModel)]="user.email"
+          placeholder="Email"
+          class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
+          required
+        />
+      </div>
+      <div class="flex justify-end">
+        <button
+          type="button"
+          class="mr-2 px-4 py-2 bg-gray-300 text-gray-700 rounded"
+          (click)="closeModal()"
+        >
+          Cancel
+        </button>
+        <button
+          type="submit"
+          class="px-4 py-2 bg-blue-500 text-white rounded cursor-pointer disabled:bg-blue-300 disabled:cursor-not-allowed"
+          (click)="onUpdate()"
+        >
+          Save Details
+        </button>
+      </div>
+    </form>
+  </div>
+  }
+</div>

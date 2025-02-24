@@ -4,10 +4,11 @@ export interface iEmployee {
   email: string;
   department: string;
   salary: number;
-  addedBy?: string,
+  addedBy?: string;
 }
 export interface iUser {
   _id: string;
   name: string;
   email: string;
+  profilePicture?: string;
 }

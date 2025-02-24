@@ -8,6 +8,8 @@ require("dotenv").config();
 const connectToDB = require("./config/connection");
 const { employeeRoute } = require("./routes/employee.routes");
 const authMiddleware = require("./middleware/auth.middleware");
+const path = require("path");
+const { userRoute } = require("./routes/user.routes");
 const app = express();
 const options = {
   origin: "http://localhost:4200",
@@ -23,6 +25,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(helmet());
 app.use("/auth", authRoute);
+app.use("/user", authMiddleware, userRoute);
 app.use("/employee", authMiddleware, employeeRoute);
 app.use(errorHandler);
 app.listen(port, () => {

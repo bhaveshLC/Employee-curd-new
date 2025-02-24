@@ -1,6 +1,9 @@
 <header class="bg-slate-800 dark:bg-gray-900 text-white p-4 shadow-md">
   <div class="container mx-auto flex justify-between items-center">
-    <h1 class="text-xl md:text-2xl font-bold flex items-center space-x-2">
+    <h1
+      class="text-xl md:text-2xl font-bold flex items-center space-x-2 cursor-pointer"
+      [routerLink]="['/']"
+    >
       <i class="fa-solid fa-user-tie"></i>
       <span>EMS</span>
     </h1>
@@ -9,25 +12,17 @@
       <button
         id="dropdownDefaultButton"
         (click)="toggleDropdown()"
-        class="flex items-center space-x-2 bg-gray-700 hover:bg-gray-600 border border-gray-600 rounded-full p-3 text-sm font-medium transition duration-200 ease-in-out" type="button"
+        class="flex items-center space-x-2 bg-gray-700 hover:bg-gray-600 border border-gray-600 rounded-full text-sm font-medium transition duration-200 ease-in-out"
+        type="button"
       >
-        <i class="fa-solid fa-user"></i>
-
-        <!-- <svg
-          class="w-3 h-3"
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 10 6"
-        >
-          <path
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="m1 1 4 4 4-4"
-          />
-        </svg> -->
+        <img
+          [src]="
+            authService.user()?.profilePicture ||
+            'https://ui-avatars.com/api/name=' + authService.user()?.name
+          "
+          alt="Profile Picture"
+          class="w-10 h-10 rounded-full border-2 border-gray-600 shadow-md transition-transform duration-200 ease-in-out hover:scale-105"
+        />
       </button>
 
       <div
@@ -38,9 +33,14 @@
         <ul class="py-2">
           <li>
             <a
+              routerLink="/self"
+              (click)="isDropdownOpen = false"
               class="flex items-center px-4 py-2 text-sm font-medium text-gray-300 hover:bg-gray-600 hover:text-white cursor-pointer transition duration-200 ease-in-out"
             >
-        <span>{{ authService.user()?.name }}</span>
+              <span>
+                <i class="fa-solid fa-user mr-2"></i>
+                {{ authService.user()?.name }}</span
+              >
             </a>
           </li>
           <li>
@@ -80,3 +80,4 @@
     </div>
   </div>
 </header>
+<app-change-password />

@@ -6,6 +6,7 @@ const {
   generateRefreshToken,
   generateAccessToken,
 } = require("./token.service");
+const { uploadToCloudinary } = require("../utils/uploadToCloudinary");
 require("dotenv").config();
 async function registerUser(userData) {
   await userSchemaValidation.validateAsync(userData);
@@ -16,7 +17,13 @@ async function registerUser(userData) {
     error.statusCode = 409;
     throw error;
   }
-  const newUser = await User.create({ name, email, password });
+  const logo = `https://ui-avatars.com/api/name=${name}`;
+  const newUser = await User.create({
+    name,
+    email,
+    password,
+    profilePicture: logo,
+  });
   return;
 }
 async function userLogin(email, password) {
@@ -56,7 +63,7 @@ async function logoutUser(token) {
   return;
 }
 async function getLoggedInUser(userId) {
-  const user = await User.findById(userId).select("name email");
+  const user = await User.findById(userId).select("name email profilePicture");
   if (!user) {
     const error = new Error("User not found.");
     error.statusCode = 404;
@@ -64,27 +71,10 @@ async function getLoggedInUser(userId) {
   }
   return user;
 }
-async function changePassword(userId, password, newPassword) {
-  const user = await User.findById(userId);
-  if (!user) {
-    const error = new Error("User not found.");
-    error.statusCode = 404;
-    throw error;
-  }
-  const isMatch = await user.comparePassword(password);
-  if (!isMatch) {
-    const error = new Error("Incorrect old password.");
-    error.statusCode = 400;
-    throw error;
-  }
-  user.password = newPassword;
-  await user.save();
-  return;
-}
+
 module.exports = {
   registerUser,
   userLogin,
   getLoggedInUser,
-  changePassword,
   logoutUser,
 };

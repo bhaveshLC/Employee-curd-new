@@ -8,7 +8,8 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { passwordMatchValidator } from '../../../core/shared/passwordMatchValidator/passwordMatchValidator';
+import { passwordMatchValidator } from '../../../core/shared/passwordValidation/passwordMatchValidator';
+import { passwordStrength } from '../../../core/shared/passwordValidation/passwordStrength';
 import { AuthService } from '../../../core/service/Auth/auth.service';
 import { ToastService } from '../../../core/service/toast/toast.service';
 
@@ -31,6 +32,7 @@ export class SignupComponent {
       password: new FormControl('', [
         Validators.required,
         Validators.minLength(6),
+        passwordStrength(),
       ]),
       confirmPassword: new FormControl('', [Validators.required]),
     },

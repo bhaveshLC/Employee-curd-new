@@ -5,6 +5,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { authGuard } from './core/guard/auth.guard';
 import { authenticationGuard } from './core/guard/authentication.guard';
 import { LayoutComponent } from './pages/layout/layout.component';
+import { ProfileComponent } from './pages/profile/profile.component';
 
 export const routes: Routes = [
   {
@@ -21,12 +22,16 @@ export const routes: Routes = [
     path: '',
     canActivate: [authenticationGuard],
     component: LayoutComponent,
-    children:[
+    children: [
       {
-        path:'',
+        path: '',
         component: HomeComponent,
-      }
-    ]
+      },
+      {
+        path: 'self',
+        component: ProfileComponent,
+      },
+    ],
   },
   {
     path: '**',

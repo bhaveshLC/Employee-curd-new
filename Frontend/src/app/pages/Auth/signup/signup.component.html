@@ -77,6 +77,15 @@
       >
         Password must be at least 6 characters long.
       </div>
+      <div
+        *ngIf="signupForm.controls['password'].touched && signupForm.controls['password'].dirty && signupForm.controls['password'].errors?.['passwordStrength']"
+        class="text-red-500 text-sm"
+      >
+        <p>Password must include at least</p>
+        <p>one uppercase letter,</p>
+        <p>one lowercase letter,</p>
+        <p>one number</p>
+      </div>
     </div>
     <div class="mb-4">
       <label
@@ -102,7 +111,7 @@
       </div>
       <div
         class="text-red-500 text-sm"
-        *ngIf="signupForm.controls['confirmPassword'].touched && signupForm.errors?.['PasswordNoMatch']"
+        *ngIf="signupForm.controls['confirmPassword'].touched && signupForm.controls['confirmPassword'].dirty && signupForm.errors?.['PasswordNoMatch']"
       >
         Password does'nt match.
       </div>

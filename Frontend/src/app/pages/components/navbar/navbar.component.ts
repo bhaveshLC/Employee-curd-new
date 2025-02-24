@@ -1,13 +1,14 @@
 import { Component, HostListener, inject } from '@angular/core';
 import { AuthService } from '../../../core/service/Auth/auth.service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ThemeService } from '../../../core/service/Theme/theme.service';
+import { ChangePasswordComponent } from '../../../core/Reusable/change-password/change-password.component';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ChangePasswordComponent, RouterLink],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css',
 })
