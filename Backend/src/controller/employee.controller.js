@@ -35,7 +35,7 @@ async function updateEmployee(req, res) {
 }
 
 async function deleteEmployee(req, res) {
-  const userId = req.user._id;
+  // const userId = req.user._id;
   const deletedEmployee = await employeeService.deleteEmployeeById(
     req.params.id
   );

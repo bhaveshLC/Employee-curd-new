@@ -4,6 +4,7 @@ export interface iEmployee {
   email: string;
   department: string;
   salary: number;
+  addedBy?: string,
 }
 export interface iUser {
   _id: string;

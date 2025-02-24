@@ -39,6 +39,7 @@ export class FilterComponent {
   }
 
   onFilterChange(): void {
+    this.queryObj.page = 1;
     this.getEmployee.emit({ ...this.queryObj }); 
   }
 

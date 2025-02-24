@@ -38,6 +38,7 @@ export class EditEmployeeComponent implements OnChanges {
     email: '',
     department: '',
     salary: 0,
+    addedBy: '',
   };
   ngOnChanges(): void {
     if (this.employee) {
@@ -55,6 +56,7 @@ export class EditEmployeeComponent implements OnChanges {
       email: this.employee?.email!,
       department: this.employee?.department!,
       salary: this.employee?.salary!,
+      addedBy: this.employee?.addedBy
     };
   }
   onUpdate() {
